@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="repoFinderApp">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Github Repository Finder</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="js/angular.min.js" type="text/javascript"></script>
+  <script src="js/app.js" type="text/javascript"></script>
+</head>
+<body ng-controller="RepoController">
+  <div>
+    <h1> Github Repository Finder </h1>
+    <form ng-submit="findUser(userName)">
+      <input type="search" placeholder="Search" ng-model="userName">
+    </form>
+    <div ng-include="'repo-listings.html'"> </div>
+  </div>
+
+  <!-- Keep partial in same html file to get around CORS policy without web server -->
+  <script type=text/ng-template id=repo-listings.html>
+    <p ng-show="error"> {{ error }} </p>
+    <!-- Only show list when userData has repos, and no error has occured -->
+    <ul ng-hide="error || userData.length == 0">
+      <li ng-repeat="repo in userData">
+        <a ng-href="{{ repo.html_url}}" target="_blank"> {{ repo.name }} </a>
+      </li>
+    </ul>
+    <p ng-show="userData.length == 0"> No Repositories Found for Given User </p>
+  </script>
+</body>
+</html>
