@@ -1,0 +1,202 @@
+/* ---- Responsive Grid ---- */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 75em;
+  margin: 0 auto;
+  padding: 0 1.25em;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.col {
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (min-width: 400px) {
+  .container {
+    width: 90%;
+    padding: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 85%;
+  }
+
+  .col {
+    padding-left: 0.9375em;
+    padding-right: 0.9375em;
+  }
+
+  .quarter.col {
+    width: 25%;
+  }
+
+  .third.col {
+    width: 33.3333333333%;
+  }
+
+  .half.col {
+    width: 50%;
+  }
+
+  .whole.col {
+    width: 100%;
+  }
+}
+
+/* --------- Reset --------- */
+
+div, h1, h2, h3, h4, h5, h6, p, ul, li, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font: 100% 'Karla', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-y: scroll;
+}
+
+/* --------- Style --------- */
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+.slideUp, .slideDown {
+  transition: all 0.5s ease 0s;
+}
+
+.slideUp {
+  margin-bottom: 50px;
+  margin-top: 50px;
+}
+
+.slideDown {
+  margin-bottom: 180px;
+  margin-top: 180px;
+}
+
+.main-content h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.main-content h2 {
+  font-size: 17px;
+  font-weight: normal;
+}
+
+.main-content form {
+  margin: 30px 0;
+}
+
+input[type="text"] {
+  background-image: url('../img/search.png');
+  background-repeat: no-repeat;
+  background-position: 96% 55%;
+  background-size: 15px 15px;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  font-size: 18px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: none;
+  -moz-border-radius: none;
+  -ms-border-radius: none;
+  -o-border-radius: none;
+  border-radius: none;
+  padding: 10px;
+}
+
+input[type="text"]:focus {
+  border: solid 5px rgba(216, 0, 39, 1.00);
+  outline: none;
+}
+
+input[type="text"], .btn {
+  border: 5px solid rgba(216, 0, 39, 0.4);
+  -webkit-transition: border 0.3s;
+  -moz-transition: border 0.3s;
+  -o-transition: border 0.3s;
+  transition: border 0.3s;
+}
+
+.btn {
+  display: inline-block;
+  -webkit-border-radius: 4;
+  -moz-border-radius: 4;
+  border-radius: 4px;
+  color: #000000;
+  font-size: 15px;
+  background: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  cursor: pointer;
+  width: 45px;
+  margin: 0 5px;
+}
+
+.btn:hover {
+  border-color: rgba(216, 0, 39, 1.00);
+  text-decoration: none;
+}
+
+.repo-listings {
+  margin-top: 30px;
+}
+
+.data {
+  padding: 10px 0;
+  font-size: 18px;
+  background-clip: content-box;
+  white-space: nowrap;
+}
+
+.data a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  display: block;
+}
+
+.data a:hover{
+  color: rgba(216, 0, 39, 1.00);
+}
+
+.data p {
+  font-size: 15px;
+}
+
+.data, .data a, .data p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.data a, .data p {
+  max-width: 90%;
+  margin: 0 auto;
+}
+
