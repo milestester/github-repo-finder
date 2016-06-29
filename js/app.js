@@ -1,25 +1,44 @@
 angular.module('repoFinderApp', [])
 
-.controller('RepoController', function($scope, gitHubSearch) {
-
+.controller('RepoController', function($scope, $gitHubSearch) {
+  $scope.title = "Github Repository Finder";
+  $scope.subtitle = "Search Below By Username to Find Repositories";
+  $scope.slide = false;
   $scope.findUser = function(userName) {
-    gitHubSearch.userData(userName).then(function(payload) {
-      console.log(payload);
-      if(payload.status == 200) {
-        $scope.error = null;
-        $scope.userData = payload.data;
-      } else if(payload.status == 404) {
-        // Cannot be found on server
-        $scope.error = payload.statusText;
-      } else {
-        // Any other errors from API call
-        $scope.error = payload.statusText;
-      }
-    });
+    if(userName) {
+      $gitHubSearch.userData(userName).then(function(payload) {
+        console.log(payload);
+        if(payload.status == 200) {
+          if(payload.data && payload.data.length == 0) {
+            $scope.error = "No Repositories Found for Given User";
+          } else {
+            $scope.slide = true;
+            $scope.error = "";
+          }
+          $scope.userData = payload.data;
+        } else if(payload.status == 404) {
+          // Cannot be found on server
+          $scope.error = payload.statusText;
+        } else {
+          // Any other errors from API call
+          $scope.error = payload.statusText;
+        }
+      });
+    } else {
+      $scope.slide = false;
+      $scope.error = "No Username Entered";
+    }
+  };
+
+  $scope.clear = function() {
+    $scope.userName = "";
+    $scope.userData = [];
+    $scope.error = "";
+    $scope.slide = false;
   };
 })
 
-.factory('gitHubSearch', function($http) {
+.factory('$gitHubSearch', function($http) {
   return {
       userData : function(userName) {
         // Sorted and return in updated descending order
