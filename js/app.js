@@ -1,4 +1,4 @@
-angular.module('repoFinderApp', [])
+angular.module('repoFinderApp', ['ngLoadingSpinner'])
 
 .controller('RepoController', function($scope, $gitHubSearch) {
   $scope.title = "Github Repository Finder";
@@ -6,34 +6,25 @@ angular.module('repoFinderApp', [])
   $scope.slide = false;
   $scope.findUser = function(userName) {
     if(userName) {
-      $gitHubSearch.userData(userName).then(function(payload) {
-        console.log(payload);
-        if(payload.status == 200) {
-          if(payload.data && payload.data.length == 0) {
-            $scope.error = "No Repositories Found for Given User";
-          } else {
-            $scope.slide = true;
-            $scope.error = "";
-          }
-          $scope.userData = payload.data;
-        } else if(payload.status == 404) {
-          // Cannot be found on server
-          $scope.error = payload.statusText;
+      $gitHubSearch.userData(userName).then(function(res) {
+        if(res.data) {
+          $scope.userMessage = res.userMessage;
+          $scope.userData = res.data;
         } else {
-          // Any other errors from API call
-          $scope.error = payload.statusText;
+          $scope.userMessage = res.errorMessage;
         }
+        $scope.slide = true;
       });
     } else {
       $scope.slide = false;
-      $scope.error = "No Username Entered";
+      $scope.userMessage = "No Username Entered";
     }
   };
 
   $scope.clear = function() {
     $scope.userName = "";
     $scope.userData = [];
-    $scope.error = "";
+    $scope.userMessage = "";
     $scope.slide = false;
   };
 })
@@ -45,46 +36,28 @@ angular.module('repoFinderApp', [])
         return $http.get("https://api.github.com/users/" + userName + "/repos?sort=updated")
           .then(
             function(payload) {
-              return payload;
+              var repos = {};
+              repos.data = payload.data;
+              if(repos.data.length == 0) {
+                repos.userMessage = "No Repositories Found for Given User";
+              } else {
+                repos.userMessage = "";
+              }
+              return repos;
             },
             function(error) {
-              return error;
+              var errorData = {};
+              if(error.status == 404) {
+                // Special Case 2: Username Cannot Be Found
+                errorData.errorMessage = error.statusText + ", Please Search Again";
+              } else {
+                // Special Case 3: Any other errors from API call, log to console
+                console.log(error);
+                errorData.errorMessage = "Error Occured, Please Search Again";
+              }
+              return errorData;
             }
           );
       }
-        // userData : [
-        //               {
-        //                 "id": 58664097,
-        //                 "name": "gauge-chrome-extension",
-        //                 "full_name": "milestester/gauge-chrome-extension",
-        //                 "private": false,
-        //                 "html_url": "https://github.com/milestester/gauge-chrome-extension",
-        //                 "description": "Chrome extension for tracking time spent on specified websites"
-        //               },
-        //               {
-        //                 "id": 19523621,
-        //                 "name": "milestester.github.io",
-        //                 "full_name": "milestester/milestester.github.io",
-        //                 "private": false,
-        //                 "html_url": "https://github.com/milestester/milestester.github.io",
-        //                 "description": "",
-        //               },
-        //               {
-        //                 "id": 25325746,
-        //                 "name": "snake.game",
-        //                 "full_name": "milestester/snake.game",
-        //                 "private": false,
-        //                 "html_url": "https://github.com/milestester/snake.game",
-        //                 "description": ""
-        //               },
-        //               {
-        //                 "id": 44898337,
-        //                 "name": "SpeechRecognitionPlugin",
-        //                 "full_name": "milestester/SpeechRecognitionPlugin",
-        //                 "private": false,
-        //                 "html_url": "https://github.com/milestester/SpeechRecognitionPlugin",
-        //                 "description": "W3C Web Speech API - Speech Recognition plugin for PhoneGap",
-        //               }
-        //             ]
   };
 });
