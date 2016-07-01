@@ -94,12 +94,12 @@ ul {
 }
 
 .main-content h1 {
-  font-size: 40px;
+  font-size: 45px;
   margin-bottom: 10px;
 }
 
 .main-content h2 {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: normal;
 }
 
@@ -170,7 +170,7 @@ input[type="text"], .btn {
 
 .data {
   padding: 10px 0 30px;
-  font-size: 18px;
+  font-size: 20px;
   background-clip: content-box;
   white-space: nowrap;
 }
@@ -198,5 +198,9 @@ input[type="text"], .btn {
 .data a, .data p {
   max-width: 90%;
   margin: 0 auto;
+}
+
+.spinner {
+  bottom: -40px;
 }
 

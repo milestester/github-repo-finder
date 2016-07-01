@@ -15,10 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'js/angular.min.js',
-      'js/angular-mocks.js',
-      'js/angular-spinner.min.js',
-      'js/angular-loading-spinner.js',
+      'js/lib/angular.min.js',
+      'js/lib/angular-mocks.js',
+      'js/lib/angular-spinner.min.js',
+      'js/lib/angular-loading-spinner.js',
       'js/app.js',
       'tests/*.test.js'
     ],
