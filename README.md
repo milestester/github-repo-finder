@@ -1,9 +1,9 @@
 # github-repo-finder
 Github Repository Finder Coding Challenge
 
-To run tests (Will open in Chrome):
-1. npm install
-2. npm test
+To run tests (Will open in Chrome): <br />
+1. npm install <br />
+2. npm test <br />
 
 Github Icon made by http://www.flaticon.com/authors/dave-gandy from www.flaticon.com
 

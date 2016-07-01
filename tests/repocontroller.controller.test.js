@@ -1,14 +1,16 @@
 describe('RepoController', function () {
   var controller, scope, svc, def
-  var res = { 'data': [{
-                "id": 58664097,
-                "name": "gauge-chrome-extension",
-                "full_name": "milestester/gauge-chrome-extension",
-                "private": false,
-                "html_url": "https://github.com/milestester/gauge-chrome-extension",
-                "description": "Chrome extension for tracking time spent on specified websites"
-                }],
-                'userMessage': ""
+  var res = {
+              'data':
+                  [{
+                    "id": 58664097,
+                    "name": "gauge-chrome-extension",
+                    "full_name": "milestester/gauge-chrome-extension",
+                    "private": false,
+                    "html_url": "https://github.com/milestester/gauge-chrome-extension",
+                    "description": "Chrome extension for tracking time spent on specified websites"
+                  }],
+              'userMessage': ""
             };
   var badRes = {errorMessage: "Not Found, Please Search Again"};
 
@@ -35,6 +37,28 @@ describe('RepoController', function () {
     expect(scope.userMessage).toEqual(undefined);
   });
 
+  describe('$scope.title', function () {
+    it('checks the title of the index page', function () {
+        expect(scope.title).toBe("Github Repository Finder");
+    });
+  });
+
+  describe('$scope.subtitle', function () {
+    it('checks the subtitle of the index page', function () {
+      expect(scope.subtitle).toBe("Search Below By Username to Find Repositories");
+    });
+  });
+
+  describe('tests $scope.clear()', function () {
+    it('checks scope variables after clear function is called', function () {
+      scope.clear();
+      expect(scope.userName).toBe("");
+      expect(scope.userData).toEqual([]);
+      expect(scope.userMessage).toBe("");
+      expect(scope.slide).toBe(false);
+    });
+  });
+
   describe('tests $scope.findUser(userName)', function () {
     it('checks for 200 response', function () {
       spyOn(svc, 'userData').and.callThrough();
@@ -43,6 +67,7 @@ describe('RepoController', function () {
       scope.$digest();
       expect(svc.userData).toHaveBeenCalled();
       expect(scope.userData).toBe(res.data);
+      expect(scope.slide).toBe(true);
     });
 
     it('checks for 404 response', function () {
@@ -53,32 +78,14 @@ describe('RepoController', function () {
       expect(svc.userData).toHaveBeenCalled();
       expect(scope.userData).toBe(undefined);
       expect(scope.userMessage).toBe("Not Found, Please Search Again");
+      expect(scope.slide).toBe(true);
     });
 
-    it('checks scope variables after clear function is called', function () {
-      scope.clear();
-      expect(scope.userName).toBe("");
-      expect(scope.userData).toEqual([]);
-      expect(scope.userMessage).toBe("");
-      expect(scope.slide).toBe(false);
-    });
-
-    it('checks no user name entered', function () {
+    it('checks when no username is entered', function () {
       scope.findUser();
       expect(scope.userData).toBe(undefined);
       expect(scope.slide).toBe(false);
-    });
-  });
-
-  describe('$scope.title', function () {
-    it('sets the title of the index page', function () {
-        expect(scope.title).toBe("Github Repository Finder");
-    });
-  });
-
-  describe('$scope.subtitle', function () {
-    it('sets the title of the index page', function () {
-      expect(scope.subtitle).toBe("Search Below By Username to Find Repositories");
+      expect(scope.userMessage).toBe("No Username Entered");
     });
   });
 });

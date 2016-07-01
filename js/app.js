@@ -4,6 +4,7 @@ angular.module('repoFinderApp', ['ngLoadingSpinner'])
   $scope.title = "Github Repository Finder";
   $scope.subtitle = "Search Below By Username to Find Repositories";
   $scope.slide = false;
+
   $scope.findUser = function(userName) {
     if(userName) {
       $gitHubSearch.userData(userName).then(function(res) {
@@ -60,4 +61,14 @@ angular.module('repoFinderApp', ['ngLoadingSpinner'])
           );
       }
   };
+})
+
+.directive('githubRepoItem', function() {
+  return {
+    restrict : 'E',
+    template :  '<li class="data quarter col" ng-repeat="repo in userData">' +
+                  '<a ng-href="{{ repo.html_url}}" target="_blank"> {{ repo.name }} </a>' +
+                  '<p> {{ repo.description || "No Description"}} </p>' +
+                '</li>'
+  }
 });
